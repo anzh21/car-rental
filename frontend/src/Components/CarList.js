@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, {useState, useEffect} from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,6 +9,7 @@ import { CarRental, Favorite } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -21,180 +21,71 @@ const useStyles = makeStyles({
 
 function CarList() {
     const classes = useStyles();
+    const [data, setData]=useState('')
+
+    const getAllCar=()=>{
+      axios({
+        method: 'GET',
+        url:"http://localhost:8000/car"
+      }).then((res)=>{
+        console.log("res", res);
+        setData(res.data.data);
+      }).catch((err) => console.log("err", err));
+    };
+
+    useEffect(()=>{
+      getAllCar();
+    }, [])
 
     return(
-    //     <div class="container-fluid ">
-    // <div class="row">
-    //     <div className="col-md-3">
-    //         </div>
-    //         <div className="col-md-9">
-    //         <div className="row">
-    //     <div class="col-md-4 col-sm-6">
-    //         <div class="product-grid">
-    //             <div class="product-image">
-    //                 <a href="#">
-    //                     <img class="pic-1" src="https://i.postimg.cc/pdvcSwBL/1.jpg"/>
-    //                 </a>
-    //                 <span class="product-discount-label">-20%</span>
-    //             </div>
-    //             <div class="product-content text-left">
-    //                 <h3 class="title">
-    //                     <a href="#">Men's Blazer</a>
-    //                 </h3>
-    //                 <div class="price">$16.00
-    //                     <span>$20.00</span>
-    //                 </div>
-    //                 <div className="product-rating">
-    //                     {/* <Rate allowHalf defaultValue={3.5} /> */}
-    //                     <span className="ant-rate-text">(23 Reviews)</span>
-    //                 </div>
-    //             </div>
-    //             <ul class="social">
-    //                 <li><a href="" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-    //                 <li><a href="" data-tip="Wishlist"><i class="fa fa-heart"></i></a></li>
-    //                 <li><a href="" data-tip="add to cart"><i class="fa fa-shopping-cart"></i></a></li>
-    //                 <li><a href="" data-tip="Compare"><i class="fa fa-random"></i></a></li>
-    //             </ul>
-    //         </div>
-    //     </div>
-    //     <div class="col-md-4 col-sm-6">
-    //         <div class="product-grid">
-    //             <div class="product-image">
-    //                 <a href="#">
-    //                     <img class="pic-1" src="https://i.postimg.cc/KzBzYgMN/2.jpg"/>
-    //                 </a>
-    //             </div>
-    //             <div class="product-content text-left">
-    //                 <h3 class="title">
-    //                     <a href="#">Women's Top</a>
-    //                 </h3>
-    //                 <div class="price">$17.50</div>
-    //                 <div className="product-rating">
-    //                     {/* <Rate allowHalf defaultValue={4.5} /> */}
-    //                     <span className="ant-rate-text">(2 Reviews)</span>
-    //                 </div>
-    //             </div>
-    //             <ul class="social">
-    //                 <li><a href="" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-    //                 <li><a href="" data-tip="Wishlist"><i class="fa fa-heart"></i></a></li>
-    //                 <li><a href="" data-tip="add to cart"><i class="fa fa-shopping-cart"></i></a></li>
-    //                 <li><a href="" data-tip="Compare"><i class="fa fa-random"></i></a></li>
-    //             </ul>
-    //         </div>
-    //     </div><div class="col-md-4 col-sm-6">
-    //         <div class="product-grid">
-    //             <div class="product-image">
-    //                 <a href="#">
-    //                     <img class="pic-1" src="https://i.postimg.cc/jjLVv0qn/3.jpg"/>
-    //                 </a>
-    //             </div>
-    //             <div class="product-content text-left">
-    //                 <h3 class="title">
-    //                     <a href="#">Women's Top</a>
-    //                 </h3>
-    //                 <div class="price">$17.50</div>
-    //                 <div className="product-rating">
-    //                     {/* <Rate allowHalf defaultValue={3} /> */}
-    //                     <span className="ant-rate-text">(20 Reviews)</span>
-    //                 </div>
-    //             </div>
-    //             <ul class="social">
-    //                 <li><a href="" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-    //                 <li><a href="" data-tip="Wishlist"><i class="fa fa-heart"></i></a></li>
-    //                 <li><a href="" data-tip="add to cart"><i class="fa fa-shopping-cart"></i></a></li>
-    //                 <li><a href="" data-tip="Compare"><i class="fa fa-random"></i></a></li>
-    //             </ul>
-    //         </div>
-    //     </div>
-    //     <div class="col-md-4 col-sm-6">
-    //         <div class="product-grid">
-    //             <div class="product-image">
-    //                 <a href="#">
-    //                     <img class="pic-1" src="https://i.postimg.cc/6qHysxRJ/4.jpg"/>
-    //                 </a>
-    //             </div>
-    //             <div class="product-content text-left">
-    //                 <h3 class="title">
-    //                     <a href="#">Women's Top</a>
-    //                 </h3>
-    //                 <div class="price">$17.50</div>
-    //                 <div className="product-rating">
-    //                     {/* <Rate allowHalf defaultValue={3.5} /> */}
-    //                     <span className="ant-rate-text">(9 Reviews)</span>
-    //                 </div>
-    //             </div>
-    //             <ul class="social">
-    //                 <li><a href="" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-    //                 <li><a href="" data-tip="Wishlist"><i class="fa fa-heart"></i></a></li>
-    //                 <li><a href="" data-tip="add to cart"><i class="fa fa-shopping-cart"></i></a></li>
-    //                 <li><a href="" data-tip="Compare"><i class="fa fa-random"></i></a></li>
-    //             </ul>
-    //         </div>
-    //     </div>
-    //     <div class="col-md-4 col-sm-6">
-    //         <div class="product-grid">
-    //             <div class="product-image">
-    //                 <a href="#">
-    //                     <img class="pic-1" src="https://i.postimg.cc/6qHysxRJ/4.jpg"/>
-    //                 </a>
-    //             </div>
-    //             <div class="product-content text-left">
-    //                 <h3 class="title">
-    //                     <a href="#">Women's Top</a>
-    //                 </h3>
-    //                 <div class="price">$17.50</div>
-    //                 <div className="product-rating">
-    //                     {/* <Rate allowHalf defaultValue={2.5} /> */}
-    //                     <span className="ant-rate-text">(11 Reviews)</span>
-    //                 </div>
-    //             </div>
-    //             <ul class="social">
-    //                 <li><a href="" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-    //                 <li><a href="" data-tip="Wishlist"><i class="fa fa-heart"></i></a></li>
-    //                 <li><a href="" data-tip="add to cart"><i class="fa fa-shopping-cart"></i></a></li>
-    //                 <li><a href="" data-tip="Compare"><i class="fa fa-random"></i></a></li>
-    //             </ul>
-    //         </div>
-    //     </div>
-    // </div>
-    // </div>
-    // </div>  
-    // </div>
     <Container maxWidth="lg">
         <Grid container>
-        <Grid item lg={3} className={classes.grid}>
-    <Card >
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
-        <CardContent>
-        <Typography gutterBottom variant="h6" component="div" align="justify">
-            Lizard 
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Car Type: Sedan
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardContent>
-        <Stack spacing={1}>
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
-        </Stack>
-      </CardContent>
-      
-      <CardActions>
-        <span style={{marginRight:"1.5em"}}>INR 100</span>
-        <Button aria-label="car rent" variant="outlined" startIcon={<CarRental />}>
-           Rent a Car
-        </Button>
-      </CardActions>
-    </Card>
-    </Grid>
-    <Grid item lg={3} className={classes.grid}>
+          {
+            data? data.map((data, key)=>{
+              console.log("Data Fetched", data);
+              return(
+                <Grid item lg={3} className={classes.grid}>
+                  <Card >
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={data.carImg}
+                        alt="green iguana"
+                      />
+                      <CardContent>
+                      <Typography gutterBottom variant="h6" component="div" align="justify">
+                          {data.carname} 
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Car Type: {data.cartype}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardContent>
+                      <Stack spacing={1}>
+                          <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+                      </Stack>
+                    </CardContent>
+                    
+                    <CardActions>
+                      <span style={{marginRight:"1.5em"}}>{data.carprice}</span>
+                      <Button
+                      onClick={data={data}}
+                      aria-label="car rent" 
+                      variant="outlined" 
+                      startIcon={<CarRental />}>
+                        Rent a Car
+                      </Button>
+                    </CardActions>
+                  </Card>
+              </Grid>
+              );
+            }) : ""
+          }
+        </Grid>
+        
+    {/* <Grid item lg={3} className={classes.grid}>
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
@@ -277,9 +168,9 @@ function CarList() {
         </Button>
       </CardActions>
     </Card>
-    </Grid>
-    </Grid>
-    <Grid container>
+    </Grid> */}
+    
+    {/* <Grid container>
         <Grid item lg={3} className={classes.grid}>
     <Card >
       <CardActionArea>
@@ -392,7 +283,7 @@ function CarList() {
       </CardActions>
     </Card>
     </Grid>
-    </Grid>
+    </Grid> */}
     </Container>
     )
     
