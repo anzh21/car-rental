@@ -10,6 +10,9 @@ import { makeStyles } from '@mui/styles';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import axios from "axios";
+import {Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {getAllCar} from "../Redux/Action/CarListAction";
 
 
 const useStyles = makeStyles({
@@ -20,28 +23,37 @@ const useStyles = makeStyles({
 
 
 function CarList() {
+  
     const classes = useStyles();
-    const [data, setData]=useState('')
+    const [data, setData]=useState("");
+    const CarList = useSelector(state =>state?.carReducer?.products?.data);
+    // const car  = CarList;
 
-    const getAllCar=()=>{
-      axios({
-        method: 'GET',
-        url:"http://localhost:8000/car"
-      }).then((res)=>{
-        console.log("res", res);
-        setData(res.data.data);
-      }).catch((err) => console.log("err", err));
-    };
+
+  console.log("cartlist" , CarList)
+
+    const dispatch=useDispatch();
+
+    // const getAllCar=()=>{
+    //   axios({
+    //     method: 'GET',
+    //     url:"http://localhost:8000/car"
+    //   }).then((res)=>{
+    //     console.log("res", res);
+    //     setData(res.data.data);
+    //   }).catch((err) => console.log("err", err));
+    // };
 
     useEffect(()=>{
-      getAllCar();
+      // getAllCar();
+      dispatch(getAllCar(CarList));
     }, [])
 
     return(
     <Container maxWidth="lg">
         <Grid container>
           {
-            data? data.map((data, key)=>{
+            CarList ? CarList.filter(booked => booked.status !== "Booked" ).map((data, key)=>{
               console.log("Data Fetched", data);
               return(
                 <Grid item lg={3} className={classes.grid}>
@@ -70,13 +82,20 @@ function CarList() {
                     
                     <CardActions>
                       <span style={{marginRight:"1.5em"}}>{data.carprice}</span>
-                      <Button
-                      onClick={data={data}}
-                      aria-label="car rent" 
-                      variant="outlined" 
-                      startIcon={<CarRental />}>
-                        Rent a Car
-                      </Button>
+                      <Link to={{
+                        pathname: "/calc/" + data._id,
+                        state:{
+                          data:data
+                      }
+                      }}>
+                        <Button
+                        // onClick={data={data}}
+                        aria-label="car rent" 
+                        variant="outlined" 
+                        startIcon={<CarRental />}>
+                          Rent a Car
+                        </Button>
+                      </Link>
                     </CardActions>
                   </Card>
               </Grid>

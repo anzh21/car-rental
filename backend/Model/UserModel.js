@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
-const CarSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
+    username: {
+        type:String,
+    },
   carname: {
     type: String,
     trim: true,
@@ -13,13 +16,9 @@ const CarSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  carImg:{
-      type:String,
-      trim : true
-  },
   status:{
-    type:String
+      type:String,
   }
 });
 
-module.exports = mongoose.model("Car", CarSchema);
+module.exports = mongoose.model("User", UserSchema);

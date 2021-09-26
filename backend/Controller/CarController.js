@@ -34,5 +34,24 @@ exports.CreateData = async (req, res, next) => {
       res.status(400).json({ success: false });
     }
   };
+
+  exports.Updatedata = async (req, res, next) => {
+    try {
+      const updatedata = await CarModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          runValidators: true,
+          new: true,
+        }
+      );
+      if (!updatedata) {
+        return res.status(400).json({ success: false });
+      }
+      res.status(200).json({ success: true, data: updatedata });
+    } catch (error) {
+      res.status(400).json({ success: false });
+    }
+  };
   
   
